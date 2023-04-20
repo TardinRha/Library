@@ -1,0 +1,8 @@
+﻿Programa para marcar os livros lidos, que quero ler, livros na estante, livros para comprar
+Marcação de livro favorito
+Dias de leitura (inserir a data inicial, e somar com a data final, calculando o tempo)
+Marcar abandono de livro
+Opção de filtrar por autor ou por titulo
+Filtrar livros lidos ou não lidos
+Manter ordenação por ordem alfabética
+Puxar banco de dados de ISBN dos livros
