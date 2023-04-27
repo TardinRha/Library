@@ -26,7 +26,7 @@ namespace Library.Classes
         public List<Livro> LivrosFavoritos { get; set; } = new List<Livro>();
         public List<Livro> LivrosLendo { get; set; } = new List<Livro> { };
 
-        public Usuario() {}
+        public Usuario() { }
 
         public Usuario(string nome, DateTime dataNascimento, string login, string senha)
         {
@@ -524,13 +524,101 @@ namespace Library.Classes
                 }
             }
         }
+        public void PesquisarLivro()
+        {
+            Console.Write("Pesquisar por 1-Titulo ou 2-ID? ");
+            switch (int.Parse(Console.ReadLine()))
+            {
+                case 1:
+                    {
+                        Console.Write("Digite o Titulo do livro que deseja: ");
+                        string titulo = Console.ReadLine();
+                        Livro livroSelecionado = LivrosCadastrados.Find(l => l.Titulo == titulo);
+                        if (livroSelecionado == null)
+                        {
+                            Console.Write("LIVRO NÃO ENCONTRADO! DESEJA TENTAR NOVAMENTE? (s/n)");
+                            if (Console.ReadLine() == "s")
+                            {
+                                Console.WriteLine();
+                                PesquisarLivro();
+                            }
+                        }
+                        else
+                        {
+                            livroSelecionado.InformacaoLivro();
+                            Console.WriteLine("Digite uma das opções: 0-Sair; 1-Marcar esse livro como favorito; 2-Colocar esse livro na estante");
+                            switch(int.Parse(Console.ReadLine()))
+                            {
+                                case 1:
+                                    {
+                                        LivrosFavoritos.Add(livroSelecionado);
+                                        Console.WriteLine("Livro adicionado aos favoritos com sucesso!");
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        LivrosNaEstante.Add(livroSelecionado);
+                                        Console.WriteLine("Livro adicionado à estante com sucesso!");
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        return;
+                                    }
+                            }
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.Write("Digite o ID do livro que deseja: ");
+                        string id = Console.ReadLine();
+                        Livro livroSelecionado = LivrosCadastrados.Find(l => l.ID == id);
+                        if (livroSelecionado == null)
+                        {
+                            Console.Write("LIVRO NÃO ENCONTRADO! DESEJA TENTAR NOVAMENTE? (s/n)");
+                            if (Console.ReadLine() == "s")
+                            {
+                                Console.WriteLine();
+                                PesquisarLivro();
+                            }
+                        }
+                        else
+                        {
+                            livroSelecionado.InformacaoLivro();
+                        }
+                        break;
+                    }
+            }
+
+        }
         public void AdicionarNaEstante()
         {
-
+            Console.Write("Deseja ver a lista de livros para pegar o ID? (s/n) ");
+            if (Console.ReadLine() == "s")
+            {
+                Console.WriteLine();
+                MostrarLivrosCadastrados();
+            }
+            Console.Write("Digite o ID do livro que deseja adicionar na sua estante: ");
+            string id = Console.ReadLine();
+            Livro livroSelecionado = LivrosCadastrados.Find(l => l.ID == id);
+            LivrosNaEstante.Add(livroSelecionado);
+            Console.WriteLine($"{livroSelecionado.Titulo} adicionado na estante com sucesso!");
         }
         public void AdicionarFavoritos()
         {
-
+            Console.Write("Deseja ver a lista de livros para pegar o ID? (s/n) ");
+            if (Console.ReadLine() == "s")
+            {
+                Console.WriteLine();
+                MostrarLivrosCadastrados();
+            }
+            Console.Write("Digite o ID do livro que deseja adicionar aos favoritos: ");
+            string id = Console.ReadLine();
+            Livro livroSelecionado = LivrosCadastrados.Find(l => l.ID == id);
+            LivrosFavoritos.Add(livroSelecionado);
+            Console.WriteLine($"{livroSelecionado.Titulo} adicionado aos favoritos com sucesso!");
         }
         public void MostrarLivrosNaEstante()
         {
@@ -550,11 +638,11 @@ namespace Library.Classes
             }
             Console.WriteLine();
         }
-        
+
 
         public void InformacaoUsuario()
         {
-            Console.WriteLine($"Id: {ShortId} - Usuario: {Nome} - Data de Nascimento: {DataNascimento}");
+            Console.WriteLine($"ID: {ShortId} - Usuario: {Nome} - Data de Nascimento: {DataNascimento}");
         }
     }
 }
