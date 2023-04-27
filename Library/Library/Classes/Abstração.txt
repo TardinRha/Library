@@ -11,3 +11,21 @@ Puxar banco de dados de ISBN dos livros
 - Lista de livros que tenho na estante
 - Lista de livros favoritos
 - Escolher se quer ver a lista de livros por autor ou por título
+
+Métodos no usuário:
+CriarUsuário()
+MostrarUsuarios()
+RemoverUsuario()
+EditarUsuario()
+AdicionarLivroNoSistema()
+RemoverLivroDoSistema()
+EditarInformacaoDeLivro()
+MostrarLivrosCadastrados()
+MostrarLivroEspecifico()
+MostrarLivrosLidos()
+MostrarLivrosParLer()
+AdicionarLivrosNasRespectivasListas()
+AdicionarNaEstante
+AdicionarFavoritos
+MostrarLivrosNaEstante()
+MostrarLivrosFavoritos()
