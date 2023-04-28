@@ -16,6 +16,7 @@ namespace Library.Classes
         public string Senha { get; set; }
         public string TipoUsuario { get; set; }
         public string DataNascimento { get; set; }
+        public Usuario UsuarioLogado { get; set; }
         public DateTime Data { get; set; }
         public List<Usuario> Usuarios { get; set; } = new List<Usuario>();
         public List<Livro> LivrosCadastrados { get; set; } = new List<Livro>();
@@ -28,10 +29,11 @@ namespace Library.Classes
 
         public Usuario() { }
 
-        public Usuario(string nome, DateTime dataNascimento, string login, string senha)
+        public Usuario(string tipoUsuario, string nome, DateTime dataNascimento, string login, string senha)
         {
             Id = Guid.NewGuid();
             ShortId = Id.ToString("N")[..6];//.Substring(0, 6)
+            TipoUsuario = tipoUsuario;
             Nome = nome;
             Data = dataNascimento;
             DataNascimento = dataNascimento.ToString("dd/MM/yyyy");
@@ -40,6 +42,8 @@ namespace Library.Classes
         }
         public void CriarUsuario()
         {
+            Console.Write("Digite o tipo do usuario: ");
+            string tipoUsuario = Console.ReadLine();
             Console.Write("Digite o nome do usuario: ");
             string nomeUsuario = Console.ReadLine();
             Console.Write("Digite a data de nascimento do usuario (00/00/0000): ");
@@ -48,7 +52,7 @@ namespace Library.Classes
             string emailUsuario = Console.ReadLine();
             Console.Write("Digite a senha do usuario: ");
             string senhaUsuario = Console.ReadLine();
-            Usuario usuario = new(nomeUsuario, dataNascimento, emailUsuario, senhaUsuario);
+            Usuario usuario = new(tipoUsuario, nomeUsuario, dataNascimento, emailUsuario, senhaUsuario);
             Usuarios.Add(usuario);
             Console.WriteLine($"Usuário {usuario.Nome} criado com sucesso!");
             Console.WriteLine();
@@ -112,21 +116,25 @@ namespace Library.Classes
                 {
                     case 1:
                         {
+                            Console.WriteLine("Digite o NOME do Usuário: ");
                             usuarioSelecionado.Nome = Console.ReadLine();
                             break;
                         }
                     case 2:
                         {
+                            Console.WriteLine("Digite a DATA DE NASCIMENTO do Usuário(00/00/0000): ");
                             usuarioSelecionado.Data = DateTime.Parse(Console.ReadLine());
                             break;
                         }
                     case 3:
                         {
+                            Console.WriteLine("Digite o EMAIL do Usuário: ");
                             usuarioSelecionado.Login = Console.ReadLine();
                             break;
                         }
                     case 4:
                         {
+                            Console.WriteLine("Digite a nova SENHA do Usuário: ");
                             usuarioSelecionado.Senha = Console.ReadLine();
                             break;
                         }
@@ -150,6 +158,30 @@ namespace Library.Classes
                     Console.WriteLine();
                     EditarUsuario();
                 }
+            }
+        }
+        public void FazerLoginUsuario()
+        {
+            Console.Write("Digite seu Email: ");
+            string login = Console.ReadLine();
+            Console.Write("Digite sua Senha: ");
+            string senha = Console.ReadLine();
+            Console.WriteLine();
+            Usuario usuario = Usuarios.Find(u => u.Login == login && u.Senha == senha);
+            if (usuario == null)
+            {
+                Console.WriteLine("USUÁRIO NÃO ENCONTRADO!");
+                Console.Write("Deseja tentar novamente? (s/n): ");
+                if (Console.ReadLine() == "s")
+                {
+                    FazerLoginUsuario();
+                }
+            }
+            else
+            {
+                UsuarioLogado = usuario;
+                Console.WriteLine("Logado como: " + usuario.Nome);
+                Console.WriteLine();
             }
         }
         public void AdicionarLivroNoSistema()
@@ -188,7 +220,7 @@ namespace Library.Classes
             string volume = Console.ReadLine();
             Console.Write("Digite a quantidade de páginas do livro: ");
             int paginas = int.Parse(Console.ReadLine());
-            Console.Write("Qual o status do livro? 1-Lido; 2-Não lido; 3-Lendo; 4-Abandonado : ");
+            Console.Write("Qual o status do livro? 1-Lido; 2-Para ler; 3-Lendo; 4-Abandonado : ");
             int opcao = int.Parse(Console.ReadLine());
             string status;
             switch (opcao)
@@ -200,7 +232,7 @@ namespace Library.Classes
                     }
                 case 2:
                     {
-                        status = "Quero ler";
+                        status = "Para ler";
                         break;
                     }
                 case 3:
@@ -221,6 +253,30 @@ namespace Library.Classes
             }
             Livro livro = new(isbn, titulo, subtitulo, autorPrincipal, outrosAutores, editora, edicao, categorias, texto, colecao, volume, paginas, status);
             LivrosCadastrados.Add(livro);
+            switch (status)
+            {
+                case "Lido":
+                    {
+                        LivrosLidos.Add(livro);
+                        break;
+                    }
+                case "Para ler":
+                    {
+                        LivrosParaLer.Add(livro);
+                        break;
+                    }
+                case "Lendo":
+                    {
+                        LivrosLendo.Add(livro);
+                        break;
+                    }
+                case "Abandonado":
+                    {
+                        LivrosAbandonados.Add(livro);
+                        break;
+                    }
+                default : { break; }
+            }
             Console.WriteLine($"{livro.Titulo} adicionado com sucesso!");
             Console.WriteLine();
             Console.WriteLine("Deseja adicionar outro livro? s/n");
@@ -364,28 +420,32 @@ namespace Library.Classes
                         }
                     case 13:
                         {
-                            Console.Write("Qual o status do livro? 1-Lido; 2-Não lido; 3-Lendo; 4-Abandonado : ");
+                            Console.Write("Qual o status do livro? 1-Lido; 2-Para ler; 3-Lendo; 4-Abandonado : ");
                             int opcaoStatus = int.Parse(Console.ReadLine());
                             switch (opcaoStatus)
                             {
                                 case 1:
                                     {
                                         livroSelecionado.StatusLivro = "Lido";
+                                        LivrosLidos.Add(livroSelecionado);
                                         break;
                                     }
                                 case 2:
                                     {
-                                        livroSelecionado.StatusLivro = "Quero ler";
+                                        livroSelecionado.StatusLivro = "Para ler";
+                                        LivrosParaLer.Add(livroSelecionado);
                                         break;
                                     }
                                 case 3:
                                     {
                                         livroSelecionado.StatusLivro = "Lendo";
+                                        LivrosParaLer.Add(livroSelecionado);
                                         break;
                                     }
                                 case 4:
                                     {
                                         livroSelecionado.StatusLivro = "Abandonado";
+                                        LivrosAbandonados.Add(livroSelecionado);
                                         break;
                                     }
                                 default:
@@ -467,23 +527,7 @@ namespace Library.Classes
             }
             Console.WriteLine();
         }
-        public void MostrarLivroEspecifico()
-        {
-            MostrarLivrosCadastrados();
-            Console.Write("Digite o ID do livro que deseja ver as informações completas: ");
-            string id = Console.ReadLine();
-            Livro livro = LivrosCadastrados.Find(l => l.ID == id);
-            if (livro == null)
-            {
-                Console.Write("ID NÃO ENCONTRADA! DESEJA TENTAR NOVAMENTE? (s/n): ");
-                if (Console.ReadLine() == "s") { MostrarLivroEspecifico(); }
-            }
-            else
-            {
-                Console.WriteLine();
-                livro.InformacaoLivro();
-            }
-        }
+
         public void MostrarLivrosLidos()
         {
             Console.Write("Livros lidos: ");
@@ -501,28 +545,6 @@ namespace Library.Classes
                 Console.WriteLine($"ID: {livroParaLer.ID} - Titulo: {livroParaLer.Titulo} - {livroParaLer.Subtitulo} - Autor(a): {livroParaLer.AutorPrincipal}");
             }
             Console.WriteLine();
-        }
-        public void AdicionarLivrosNasRespectivasListas()
-        {
-            foreach (var livro in LivrosCadastrados)
-            {
-                if (livro.StatusLivro == "Lido")
-                {
-                    LivrosLidos.Add(livro);
-                }
-                else if (livro.StatusLivro == "Quero ler")
-                {
-                    LivrosParaLer.Add(livro);
-                }
-                else if (livro.StatusLivro == "Lendo")
-                {
-                    LivrosLendo.Add(livro);
-                }
-                else if (livro.StatusLivro == "Abandonado")
-                {
-                    LivrosAbandonados.Add(livro);
-                }
-            }
         }
         public void PesquisarLivro()
         {
@@ -545,26 +567,12 @@ namespace Library.Classes
                         }
                         else
                         {
-                            livroSelecionado.InformacaoLivro();
-                            Console.WriteLine("Digite uma das opções: 0-Sair; 1-Marcar esse livro como favorito; 2-Colocar esse livro na estante");
-                            switch(int.Parse(Console.ReadLine()))
+                            foreach (Livro livro in LivrosCadastrados)
                             {
-                                case 1:
-                                    {
-                                        LivrosFavoritos.Add(livroSelecionado);
-                                        Console.WriteLine("Livro adicionado aos favoritos com sucesso!");
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        LivrosNaEstante.Add(livroSelecionado);
-                                        Console.WriteLine("Livro adicionado à estante com sucesso!");
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        return;
-                                    }
+                                if (livro.Titulo == titulo)
+                                {
+                                    livroSelecionado.InformacaoLivro();
+                                }
                             }
                         }
                         break;
@@ -586,6 +594,26 @@ namespace Library.Classes
                         else
                         {
                             livroSelecionado.InformacaoLivro();
+                            Console.WriteLine("Digite uma das opções: 0-Sair; 1-Marcar esse livro como favorito; 2-Colocar esse livro na estante");
+                            switch (int.Parse(Console.ReadLine()))
+                            {
+                                case 1:
+                                    {
+                                        LivrosFavoritos.Add(livroSelecionado);
+                                        Console.WriteLine("Livro adicionado aos favoritos com sucesso!");
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        LivrosNaEstante.Add(livroSelecionado);
+                                        Console.WriteLine("Livro adicionado à estante com sucesso!");
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        return;
+                                    }
+                            }
                         }
                         break;
                     }
@@ -638,8 +666,64 @@ namespace Library.Classes
             }
             Console.WriteLine();
         }
-
-
+        public void MostrarLivrosAbandonados()
+        {
+            Console.Write("Livros abandonados: ");
+            foreach (var livroAbandonado in LivrosAbandonados)
+            {
+                Console.WriteLine($"ID: {livroAbandonado.ID} - Titulo: {livroAbandonado.Titulo} - {livroAbandonado.Subtitulo} - Autor(a): {livroAbandonado.AutorPrincipal}");
+            }
+            Console.WriteLine();
+        }
+        public void EditarStatusLivro()
+        {
+            PesquisarLivro();
+            Console.Write("Digite o ID do livro que deseja editar o status: ");
+            string id = Console.ReadLine();
+            Livro livroSelecionado = LivrosCadastrados.Find(l => l.ID == id);
+            if (livroSelecionado != null)
+            {
+                Console.Write("Qual o status do livro? 1-Lido; 2-Não lido; 3-Lendo; 4-Abandonado : ");
+                int opcaoStatus = int.Parse(Console.ReadLine());
+                switch (opcaoStatus)
+                {
+                    case 1:
+                        {
+                            livroSelecionado.StatusLivro = "Lido";
+                            break;
+                        }
+                    case 2:
+                        {
+                            livroSelecionado.StatusLivro = "Quero ler";
+                            break;
+                        }
+                    case 3:
+                        {
+                            livroSelecionado.StatusLivro = "Lendo";
+                            break;
+                        }
+                    case 4:
+                        {
+                            livroSelecionado.StatusLivro = "Abandonado";
+                            break;
+                        }
+                    default:
+                        {
+                            livroSelecionado.StatusLivro = "Não lido";
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                Console.Write("OPÇÃO INVÁLIDA! DESEJA TENTAR NOVAMENTE? (s/n): ");
+                if (Console.ReadLine() == "s")
+                {
+                    Console.WriteLine();
+                    EditarStatusLivro();
+                }
+            }
+        }
         public void InformacaoUsuario()
         {
             Console.WriteLine($"ID: {ShortId} - Usuario: {Nome} - Data de Nascimento: {DataNascimento}");

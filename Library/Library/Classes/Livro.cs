@@ -46,7 +46,11 @@ namespace Library.Classes
         }
         public void MostrarPaginasLidas()
         {
-            
+            if (StatusLivro == "Lido")
+            {
+                PaginasLidas += Paginas;
+            }
+            Console.WriteLine(PaginasLidas);
         }
         public void InformacaoLivro()
         {

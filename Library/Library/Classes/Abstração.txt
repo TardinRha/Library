@@ -17,15 +17,22 @@ CriarUsuário()
 MostrarUsuarios()
 RemoverUsuario()
 EditarUsuario()
+
 AdicionarLivroNoSistema()
 RemoverLivroDoSistema()
 EditarInformacaoDeLivro()
 MostrarLivrosCadastrados()
-MostrarLivroEspecifico()
+PesquisarLivro()
+
+AdicionarNaEstante()
+AdicionarFavoritos()
+
 MostrarLivrosLidos()
 MostrarLivrosParLer()
-AdicionarLivrosNasRespectivasListas()
-AdicionarNaEstante
-AdicionarFavoritos
 MostrarLivrosNaEstante()
 MostrarLivrosFavoritos()
+MostrarLivrosAbandonados()
+
+EditarStatusLivro()
+
+AdicionarLivrosNasRespectivasListas() TA ERRADISSIMO
