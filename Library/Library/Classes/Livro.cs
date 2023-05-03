@@ -19,13 +19,15 @@ namespace Library.Classes
         public string ISBN { get; set; }
         public string ID { get; set; }
         public string StatusLivro { get; set; }
+        public string DataLancamento { get; set; }
         public int Paginas { get; set; }
         public int PaginasLidas { get; set; } = 0;
+        public DateTime AnoLancamento { get; set; }
         public List<string> OutrosAutores { get; set; } = new List<string>();
         public List<string> Categoria { get; set; }
 
         public Livro(string isbn, string titulo, string subtitulo, string autorPrincipal, 
-            List<string> outrosAutores, string editora, string numeroEdicao, 
+            List<string> outrosAutores, string editora, string numeroEdicao, string dataLancamento, 
             List<string> categoria, string textoApresentacao, string colecao, 
             string volume, int paginas, string statuslivro)
         {
@@ -37,6 +39,7 @@ namespace Library.Classes
             OutrosAutores = outrosAutores;
             Editora = editora;
             NumeroEdicao = numeroEdicao;
+            DataLancamento = dataLancamento;
             Categoria = categoria;
             TextoApresentacao = textoApresentacao;
             Colecao = colecao;

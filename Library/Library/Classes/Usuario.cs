@@ -109,7 +109,7 @@ namespace Library.Classes
             if (usuarioSelecionado != null)
             {
                 Console.WriteLine("Qual informação do usuario deseja editar? ");
-                Console.WriteLine("1- Nome; 2- Data de Nascimento; 3- Email/Login; 4- Senhha ");
+                Console.WriteLine("1- Nome; 2- Data de Nascimento; 3- Email/Login; 4- Senha ");
                 Console.Write("Digite a opção: ");
                 int opcao = int.Parse(Console.ReadLine());
                 switch (opcao)
@@ -205,6 +205,8 @@ namespace Library.Classes
             string editora = Console.ReadLine();
             Console.Write("Digite o numero da edição do livro: ");
             string edicao = Console.ReadLine();
+            Console.Write("Digite o ano de lançamento do livro: ");
+            string dataLancamento = Console.ReadLine();
             Console.Write("Digite a(s) categoria(s) do livro separados por vírgula: ");
             List<string> categorias = new();
             string[] categ = Console.ReadLine().Split(", ");
@@ -221,9 +223,9 @@ namespace Library.Classes
             Console.Write("Digite a quantidade de páginas do livro: ");
             int paginas = int.Parse(Console.ReadLine());
             Console.Write("Qual o status do livro? 1-Lido; 2-Para ler; 3-Lendo; 4-Abandonado : ");
-            int opcao = int.Parse(Console.ReadLine());
+            int opcaoStatusLivro = int.Parse(Console.ReadLine());
             string status;
-            switch (opcao)
+            switch (opcaoStatusLivro)
             {
                 case 1:
                     {
@@ -251,26 +253,26 @@ namespace Library.Classes
                         break;
                     }
             }
-            Livro livro = new(isbn, titulo, subtitulo, autorPrincipal, outrosAutores, editora, edicao, categorias, texto, colecao, volume, paginas, status);
+            Livro livro = new(isbn, titulo, subtitulo, autorPrincipal, outrosAutores, editora, edicao, dataLancamento, categorias, texto, colecao, volume, paginas, status);
             LivrosCadastrados.Add(livro);
-            switch (status)
+            switch (opcaoStatusLivro)
             {
-                case "Lido":
+                case 1:
                     {
                         LivrosLidos.Add(livro);
                         break;
                     }
-                case "Para ler":
+                case 2:
                     {
                         LivrosParaLer.Add(livro);
                         break;
                     }
-                case "Lendo":
+                case 3:
                     {
                         LivrosLendo.Add(livro);
                         break;
                     }
-                case "Abandonado":
+                case 4:
                     {
                         LivrosAbandonados.Add(livro);
                         break;
