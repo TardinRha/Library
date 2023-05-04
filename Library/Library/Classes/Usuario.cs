@@ -14,8 +14,8 @@ namespace Library.Classes
         public string Nome { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
-        public string TipoUsuario { get; set; }
         public string DataNascimento { get; set; }
+        public string TipoConta { get; set; }
         public Usuario UsuarioLogado { get; set; }
         public DateTime Data { get; set; }
         public List<Usuario> Usuarios { get; set; } = new List<Usuario>();
@@ -29,21 +29,19 @@ namespace Library.Classes
 
         public Usuario() { }
 
-        public Usuario(string tipoUsuario, string nome, DateTime dataNascimento, string login, string senha)
+        public Usuario(string nome, DateTime dataNascimento, string login, string senha, string tipoConta)
         {
             Id = Guid.NewGuid();
             ShortId = Id.ToString("N")[..6];//.Substring(0, 6)
-            TipoUsuario = tipoUsuario;
             Nome = nome;
             Data = dataNascimento;
             DataNascimento = dataNascimento.ToString("dd/MM/yyyy");
             Login = login;
             Senha = senha;
+            TipoConta = tipoConta;
         }
         public void CriarUsuario()
         {
-            Console.Write("Digite o tipo do usuario: ");
-            string tipoUsuario = Console.ReadLine();
             Console.Write("Digite o nome do usuario: ");
             string nomeUsuario = Console.ReadLine();
             Console.Write("Digite a data de nascimento do usuario (00/00/0000): ");
@@ -52,9 +50,36 @@ namespace Library.Classes
             string emailUsuario = Console.ReadLine();
             Console.Write("Digite a senha do usuario: ");
             string senhaUsuario = Console.ReadLine();
-            Usuario usuario = new(tipoUsuario, nomeUsuario, dataNascimento, emailUsuario, senhaUsuario);
+            Console.Write("Qual o tipo de conta? 1-Administrador; 2-Usuario ");
+            int conta = int.Parse(Console.ReadLine());
+            string tipoConta;
+            if (conta == 1)
+            {
+                Console.Write("Digite o código de autorização: ");
+                if (Console.ReadLine() == "ABCD")
+                {
+                tipoConta = "Administrador";
+                }
+                else
+                {
+                    Console.WriteLine("Não autorizado para Administrador!");
+                    tipoConta = "Usuario";
+                }
+            }
+            else
+            {
+                tipoConta = "Usuario";
+            }
+            Usuario usuario = new(nomeUsuario, dataNascimento, emailUsuario, senhaUsuario, tipoConta);
             Usuarios.Add(usuario);
-            Console.WriteLine($"Usuário {usuario.Nome} criado com sucesso!");
+            if (usuario.TipoConta == "Administrador")
+            {
+                Console.WriteLine($"Administrador {usuario.Nome} criado com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine($"Usuário {usuario.Nome} criado com sucesso!");
+            }
             Console.WriteLine();
             Console.WriteLine("Deseja adicionar outro usuário? s/n");
             if (Console.ReadLine() == "s")
@@ -180,7 +205,25 @@ namespace Library.Classes
             else
             {
                 UsuarioLogado = usuario;
-                Console.WriteLine("Logado como: " + usuario.Nome);
+                Console.WriteLine($"BEM VINDO(A) {usuario.Nome}!");
+            }
+        }
+        public void IniciarSistema()
+        {
+            Console.WriteLine("BEM VINDO!");
+            Console.Write("Escolha uma opção 1-Login ou 2-Cadastrar : ");
+            if (int.Parse(Console.ReadLine()) == 1)
+            {
+                Console.WriteLine();
+                FazerLoginUsuario();
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                CriarUsuario();
+                Console.WriteLine();
+                FazerLoginUsuario();
                 Console.WriteLine();
             }
         }
@@ -277,7 +320,7 @@ namespace Library.Classes
                         LivrosAbandonados.Add(livro);
                         break;
                     }
-                default : { break; }
+                default: { break; }
             }
             Console.WriteLine($"{livro.Titulo} adicionado com sucesso!");
             Console.WriteLine();

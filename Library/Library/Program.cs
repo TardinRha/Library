@@ -7,17 +7,25 @@ internal class Program
     public static void Main(string[] args)
     {
         int modulo = 0;
-        int opcaoUsuario = 0;
-        int opcaoAdministrador = 100;
+        int opcaoUsuario;
+        int opcaoAdministrador;
 
         var usuario = new Usuario();
-        while (modulo != 2)
+        while (modulo != 3)
         {
-            if (modulo == 0)
+            if (usuario.UsuarioLogado == null)
             {
-                Console.WriteLine("Bem vindo ao modulo ADMINISTRADOR!");
+                usuario.IniciarSistema();
+            }
+            if (usuario.UsuarioLogado.TipoConta == "Administrador")
+            {
+                modulo = 1;
+            }
+            else { modulo = 2; }
+
+            if (modulo == 1)
+            {
                 Console.WriteLine("Selecione uma opção a seguir:");
-                Console.WriteLine("0 - Trocar de Módulo");
                 Console.WriteLine("1 - Cadastrar Usuário");
                 Console.WriteLine("2 - Mostrar Usuarios Cadastrados");
                 Console.WriteLine("3 - Editar informação do usuário");
@@ -31,14 +39,6 @@ internal class Program
                 Console.Write("Digite a opção: ");
                 opcaoAdministrador = int.Parse(Console.ReadLine());
                 Console.WriteLine();
-                if (opcaoAdministrador == 0)
-                {
-                    Console.WriteLine("Selecione o módulo");
-                    Console.WriteLine("0 - Administrador");
-                    Console.WriteLine("1 - Usuário");
-                    Console.WriteLine("2 - Fechar");
-                    modulo = int.Parse(Console.ReadLine());
-                }
                 if (opcaoAdministrador == 1)
                 {
                     usuario.CriarUsuario();
@@ -86,18 +86,11 @@ internal class Program
                 }
                 if (opcaoAdministrador == 10)
                 {
-                    modulo = 2;
+                    modulo = 3;
                 }
             }
-            if (modulo == 1)
+            if (modulo == 2)
             {
-                if (usuario.UsuarioLogado == null)
-                {
-                    usuario.FazerLoginUsuario();
-                }
-                Console.WriteLine("Bem vindo ao modulo USUÁRIO!");
-                Console.WriteLine("Selecione uma opção a seguir:");
-                Console.WriteLine("0 - Trocar de Módulo");
                 Console.WriteLine("1 - Cadastrar Livro");
                 Console.WriteLine("2 - Mostrar livros cadastrados");
                 Console.WriteLine("3 - Editar informação do livro");
@@ -112,31 +105,22 @@ internal class Program
                 Console.WriteLine("12 - Ver lista de 'livros para ler'");
                 Console.WriteLine("13 - Ver lista de 'livros abandonados'");
                 Console.WriteLine("14 - Sair");
-
                 opcaoUsuario = int.Parse(Console.ReadLine());
                 Console.WriteLine();
-                if (opcaoUsuario == 0)
-                {
-                    Console.WriteLine("Selecione o módulo");
-                    Console.WriteLine("0 - Administrador");
-                    Console.WriteLine("1 - Usuário");
-                    Console.WriteLine("2 - Fechar");
-                    modulo = int.Parse(Console.ReadLine());
-                }
                 if (opcaoUsuario == 1)
                 {
                     usuario.AdicionarLivroNoSistema();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 2)
                 {
                     usuario.MostrarLivrosCadastrados();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 3)
                 {
                     usuario.EditarInformacaoDeLivro();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 4)
                 {
@@ -146,32 +130,32 @@ internal class Program
                 if (opcaoUsuario == 5)
                 {
                     usuario.RemoverLivroDoSistema();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 6)
                 {
                     usuario.AdicionarNaEstante();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 7)
                 {
                     usuario.AdicionarFavoritos();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 8)
                 {
                     usuario.EditarStatusLivro();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 9)
                 {
                     usuario.MostrarLivrosNaEstante();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 10)
                 {
                     usuario.MostrarLivrosFavoritos();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 11)
                 {
@@ -181,16 +165,16 @@ internal class Program
                 if (opcaoUsuario == 12)
                 {
                     usuario.MostrarLivrosParaLer();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 13)
                 {
                     usuario.MostrarLivrosAbandonados();
-                    Console.WriteLine() ;
+                    Console.WriteLine();
                 }
                 if (opcaoUsuario == 14)
                 {
-                    modulo = 2;
+                    modulo = 3;
                 }
             }
         }

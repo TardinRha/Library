@@ -26,9 +26,9 @@ namespace Library.Classes
         public List<string> OutrosAutores { get; set; } = new List<string>();
         public List<string> Categoria { get; set; }
 
-        public Livro(string isbn, string titulo, string subtitulo, string autorPrincipal, 
-            List<string> outrosAutores, string editora, string numeroEdicao, string dataLancamento, 
-            List<string> categoria, string textoApresentacao, string colecao, 
+        public Livro(string isbn, string titulo, string subtitulo, string autorPrincipal,
+            List<string> outrosAutores, string editora, string numeroEdicao, string dataLancamento,
+            List<string> categoria, string textoApresentacao, string colecao,
             string volume, int paginas, string statuslivro)
         {
             ISBN = isbn;
@@ -59,8 +59,18 @@ namespace Library.Classes
         {
             Console.WriteLine($"ID: {ID}");
             Console.WriteLine($"{Titulo} - {Subtitulo}");
-            Console.WriteLine($"Autor: {AutorPrincipal} - {OutrosAutores}");
-            Console.WriteLine($"Editora: {Editora} - Edição: {NumeroEdicao} - Categoria: {Categoria}");
+            Console.Write($"Autor: {AutorPrincipal} - ");
+            foreach (var autor in OutrosAutores)
+            {
+                Console.Write(autor + ", ");
+            }
+            Console.WriteLine();
+            Console.Write($"Editora: {Editora} - Edição: {NumeroEdicao} - Categoria: ");
+            foreach (var categoria in Categoria)
+            {
+                Console.Write(categoria + ", ");
+            }
+            Console.WriteLine();
             Console.WriteLine($"Coletânea: {Colecao} - Volume: {Volume} - Páginas: {Paginas}");
             Console.WriteLine($"ISBN: {ISBN}");
             Console.WriteLine($"Sobre o livro: {TextoApresentacao}");
