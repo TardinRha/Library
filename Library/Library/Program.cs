@@ -38,7 +38,6 @@ internal class Program
                 Console.WriteLine("10 - Sair");
                 Console.Write("Digite a opção: ");
                 opcaoAdministrador = int.Parse(Console.ReadLine());
-                Console.WriteLine();
                 if (opcaoAdministrador == 1)
                 {
                     usuario.CriarUsuario();
@@ -95,18 +94,21 @@ internal class Program
                 Console.WriteLine("2 - Mostrar livros cadastrados");
                 Console.WriteLine("3 - Editar informação do livro");
                 Console.WriteLine("4 - Pesquisar livro");
-                Console.WriteLine("5 - Deletar livro");
                 Console.WriteLine("6 - Adicionar livro na estante");
                 Console.WriteLine("7 - Adicionar livro aos favoritos");
-                Console.WriteLine("8 - Editar status do livro");
+                Console.WriteLine("8 - Editar status do livro");/////
+                //marcar como lido
+                //marcar como lendo
+                //marcar como abandonado
+
                 Console.WriteLine("9 - Ver livros na estante");
                 Console.WriteLine("10 - Ver livros favoritos");
                 Console.WriteLine("11 - Ver lista de 'livros lidos'");
                 Console.WriteLine("12 - Ver lista de 'livros para ler'");
                 Console.WriteLine("13 - Ver lista de 'livros abandonados'");
-                Console.WriteLine("14 - Sair");
+                Console.WriteLine("14 - Ver quantidade de páginas lidas");
+                Console.WriteLine("15 - Sair");
                 opcaoUsuario = int.Parse(Console.ReadLine());
-                Console.WriteLine();
                 if (opcaoUsuario == 1)
                 {
                     usuario.AdicionarLivroNoSistema();
@@ -173,6 +175,11 @@ internal class Program
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 14)
+                {
+                    usuario.MostrarPaginasLidas();
+                    Console.WriteLine();
+                }
+                if (opcaoUsuario == 15)
                 {
                     modulo = 3;
                 }

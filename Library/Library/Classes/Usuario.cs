@@ -9,15 +9,16 @@ namespace Library.Classes
 {
     public class Usuario
     {
-        public Guid Id { get; set; }
         public string ShortId { get; set; }
         public string Nome { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
         public string DataNascimento { get; set; }
         public string TipoConta { get; set; }
-        public Usuario UsuarioLogado { get; set; }
+        public int PaginasLidas { get; set; } = 0;
+        public Guid Id { get; set; }
         public DateTime Data { get; set; }
+        public Usuario UsuarioLogado { get; set; }
         public List<Usuario> Usuarios { get; set; } = new List<Usuario>();
         public List<Livro> LivrosCadastrados { get; set; } = new List<Livro>();
         public List<Livro> LivrosAbandonados { get; set; } = new List<Livro>();
@@ -50,7 +51,7 @@ namespace Library.Classes
             string emailUsuario = Console.ReadLine();
             Console.Write("Digite a senha do usuario: ");
             string senhaUsuario = Console.ReadLine();
-            Console.Write("Qual o tipo de conta? 1-Administrador; 2-Usuario ");
+            Console.Write("Qual o tipo de conta? 1-Administrador; 2-Usuario : ");
             int conta = int.Parse(Console.ReadLine());
             string tipoConta;
             if (conta == 1)
@@ -81,7 +82,7 @@ namespace Library.Classes
                 Console.WriteLine($"Usuário {usuario.Nome} criado com sucesso!");
             }
             Console.WriteLine();
-            Console.WriteLine("Deseja adicionar outro usuário? s/n");
+            Console.Write("Deseja cadastrar outro usuário? (s/n): ");
             if (Console.ReadLine() == "s")
             {
                 Console.WriteLine();
@@ -91,6 +92,7 @@ namespace Library.Classes
         }
         public void MostrarUsuarios()
         {
+            Console.WriteLine();
             Console.WriteLine("Listagem de usuarios: ");
             foreach (Usuario usuario in Usuarios)
             {
@@ -210,7 +212,7 @@ namespace Library.Classes
         }
         public void IniciarSistema()
         {
-            Console.WriteLine("BEM VINDO!");
+            Console.WriteLine("BEM VINDO(A)!");
             Console.Write("Escolha uma opção 1-Login ou 2-Cadastrar : ");
             if (int.Parse(Console.ReadLine()) == 1)
             {
@@ -229,6 +231,7 @@ namespace Library.Classes
         }
         public void AdicionarLivroNoSistema()
         {
+            Console.WriteLine();
             Console.Write("Digite o ISBN do livro: ");
             string isbn = Console.ReadLine();
             Console.Write("Digite o Título do livro: ");
@@ -265,7 +268,7 @@ namespace Library.Classes
             string volume = Console.ReadLine();
             Console.Write("Digite a quantidade de páginas do livro: ");
             int paginas = int.Parse(Console.ReadLine());
-            Console.Write("Qual o status do livro? 1-Lido; 2-Para ler; 3-Lendo; 4-Abandonado : ");
+            Console.Write("Qual o status do livro? 1-Lido; 2-Para ler; 3-Lendo; 4-Abandonado; 5-Não Lido : ");
             int opcaoStatusLivro = int.Parse(Console.ReadLine());
             string status;
             switch (opcaoStatusLivro)
@@ -370,12 +373,13 @@ namespace Library.Classes
                 Console.WriteLine("5- Lista de outros autores");
                 Console.WriteLine("6- Editora");
                 Console.WriteLine("7- Edição");
-                Console.WriteLine("8- Lista de categorias");
-                Console.WriteLine("9- Texto de apresentação");
-                Console.WriteLine("10- Nome da coleção");
-                Console.WriteLine("11- Volume do livro");
-                Console.WriteLine("12- Quantidade de páginas");
-                Console.WriteLine("13- Status do livro");
+                Console.WriteLine("8- Ano Lançamento");
+                Console.WriteLine("9- Lista de categorias");
+                Console.WriteLine("10- Texto de apresentação");
+                Console.WriteLine("11- Nome da coleção");
+                Console.WriteLine("12- Volume do livro");
+                Console.WriteLine("13- Quantidade de páginas");
+                Console.WriteLine("14- Status do livro");
                 Console.WriteLine("0- Sair");
                 Console.Write("Digite a opção: ");
                 int opcaoEditar = int.Parse(Console.ReadLine());
@@ -428,7 +432,13 @@ namespace Library.Classes
                             livroSelecionado.NumeroEdicao = Console.ReadLine();
                             break;
                         }
-                    case 8:
+                        case 8:
+                        {
+                            Console.Write("Digite o Ano de Lançamento correto do livro: ");
+                            livroSelecionado.DataLancamento = Console.ReadLine();
+                            break;
+                        }
+                    case 9:
                         {
                             Console.Write("Digite as categorias separadas por virgula: ");
                             string[] categorias = Console.ReadLine().Split(",");
@@ -439,31 +449,31 @@ namespace Library.Classes
                             }
                             break;
                         }
-                    case 9:
+                    case 10:
                         {
                             Console.Write("Digite o Texto de Apresentação correto do livro: ");
                             livroSelecionado.TextoApresentacao = Console.ReadLine();
                             break;
                         }
-                    case 10:
+                    case 11:
                         {
                             Console.Write("Digite o nome correto da Coleção do livro: ");
                             livroSelecionado.Colecao = Console.ReadLine();
                             break;
                         }
-                    case 11:
+                    case 12:
                         {
                             Console.Write("Digite o Volume correto do livro: ");
                             livroSelecionado.Volume = Console.ReadLine();
                             break;
                         }
-                    case 12:
+                    case 13:
                         {
                             Console.Write("Digite a quantidade Páginas corretas do livro: ");
                             livroSelecionado.Paginas = int.Parse(Console.ReadLine());
                             break;
                         }
-                    case 13:
+                    case 14:
                         {
                             Console.Write("Qual o status do livro? 1-Lido; 2-Para ler; 3-Lendo; 4-Abandonado : ");
                             int opcaoStatus = int.Parse(Console.ReadLine());
@@ -768,6 +778,15 @@ namespace Library.Classes
                     EditarStatusLivro();
                 }
             }
+        }
+        public void MostrarPaginasLidas()
+        {
+            foreach (var pagina in LivrosLidos)
+            {
+                PaginasLidas = PaginasLidas + pagina.Paginas;
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Você já leu {PaginasLidas}");
         }
         public void InformacaoUsuario()
         {

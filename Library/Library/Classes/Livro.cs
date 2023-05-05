@@ -21,8 +21,6 @@ namespace Library.Classes
         public string StatusLivro { get; set; }
         public string DataLancamento { get; set; }
         public int Paginas { get; set; }
-        public int PaginasLidas { get; set; } = 0;
-        public DateTime AnoLancamento { get; set; }
         public List<string> OutrosAutores { get; set; } = new List<string>();
         public List<string> Categoria { get; set; }
 
@@ -46,14 +44,6 @@ namespace Library.Classes
             Volume = volume;
             Paginas = paginas;
             StatusLivro = statuslivro;
-        }
-        public void MostrarPaginasLidas()
-        {
-            if (StatusLivro == "Lido")
-            {
-                PaginasLidas += Paginas;
-            }
-            Console.WriteLine(PaginasLidas);
         }
         public void InformacaoLivro()
         {
