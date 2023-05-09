@@ -60,7 +60,7 @@ internal class Program
                 }
                 if (opcaoAdministrador == 5)
                 {
-                    usuario.AdicionarLivroNoSistema();
+                    usuario.CadastrarLivroNoSistema();
                     Console.WriteLine();
                 }
                 if (opcaoAdministrador == 6)
@@ -94,24 +94,18 @@ internal class Program
                 Console.WriteLine("2 - Mostrar livros cadastrados");
                 Console.WriteLine("3 - Editar informação do livro");
                 Console.WriteLine("4 - Pesquisar livro");
-                Console.WriteLine("6 - Adicionar livro na estante");
-                Console.WriteLine("7 - Adicionar livro aos favoritos");
-                Console.WriteLine("8 - Editar status do livro");/////
-                //marcar como lido
-                //marcar como lendo
-                //marcar como abandonado
-
-                Console.WriteLine("9 - Ver livros na estante");
-                Console.WriteLine("10 - Ver livros favoritos");
-                Console.WriteLine("11 - Ver lista de 'livros lidos'");
-                Console.WriteLine("12 - Ver lista de 'livros para ler'");
-                Console.WriteLine("13 - Ver lista de 'livros abandonados'");
-                Console.WriteLine("14 - Ver quantidade de páginas lidas");
-                Console.WriteLine("15 - Sair");
+                Console.WriteLine("5 - Ver livros na estante");
+                Console.WriteLine("6 - Ver livros favoritos");
+                Console.WriteLine("7 - Ver livros lidos");
+                Console.WriteLine("8 - Ver livros para ler");
+                Console.WriteLine("9 - Ver livros abandonados");
+                Console.WriteLine("10 - Ver páginas lidas");
+                Console.WriteLine("11 - Sair");
+                Console.Write("Digite a opção: ");
                 opcaoUsuario = int.Parse(Console.ReadLine());
                 if (opcaoUsuario == 1)
                 {
-                    usuario.AdicionarLivroNoSistema();
+                    usuario.CadastrarLivroNoSistema();
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 2)
@@ -131,55 +125,35 @@ internal class Program
                 }
                 if (opcaoUsuario == 5)
                 {
-                    usuario.RemoverLivroDoSistema();
+                    usuario.MostrarLivrosNaEstante();
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 6)
                 {
-                    usuario.AdicionarNaEstante();
+                    usuario.MostrarLivrosFavoritos();
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 7)
                 {
-                    usuario.AdicionarFavoritos();
+                    usuario.MostrarLivrosLidos();
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 8)
                 {
-                    usuario.EditarStatusLivro();
+                    usuario.MostrarLivrosParaLer();
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 9)
                 {
-                    usuario.MostrarLivrosNaEstante();
+                    usuario.MostrarLivrosAbandonados();
                     Console.WriteLine();
                 }
                 if (opcaoUsuario == 10)
                 {
-                    usuario.MostrarLivrosFavoritos();
-                    Console.WriteLine();
-                }
-                if (opcaoUsuario == 11)
-                {
-                    usuario.MostrarLivrosLidos();
-                    Console.WriteLine();
-                }
-                if (opcaoUsuario == 12)
-                {
-                    usuario.MostrarLivrosParaLer();
-                    Console.WriteLine();
-                }
-                if (opcaoUsuario == 13)
-                {
-                    usuario.MostrarLivrosAbandonados();
-                    Console.WriteLine();
-                }
-                if (opcaoUsuario == 14)
-                {
                     usuario.MostrarPaginasLidas();
                     Console.WriteLine();
                 }
-                if (opcaoUsuario == 15)
+                if (opcaoUsuario == 11)
                 {
                     modulo = 3;
                 }

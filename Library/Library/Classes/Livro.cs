@@ -27,10 +27,10 @@ namespace Library.Classes
         public Livro(string isbn, string titulo, string subtitulo, string autorPrincipal,
             List<string> outrosAutores, string editora, string numeroEdicao, string dataLancamento,
             List<string> categoria, string textoApresentacao, string colecao,
-            string volume, int paginas, string statuslivro)
+            string volume, int paginas)
         {
             ISBN = isbn;
-            ID = isbn.Substring(12, 15);
+            ID = isbn.Substring(1, 10);
             Titulo = titulo;
             Subtitulo = subtitulo;
             AutorPrincipal = autorPrincipal;
@@ -43,7 +43,6 @@ namespace Library.Classes
             Colecao = colecao;
             Volume = volume;
             Paginas = paginas;
-            StatusLivro = statuslivro;
         }
         public void InformacaoLivro()
         {

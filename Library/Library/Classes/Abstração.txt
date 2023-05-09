@@ -36,3 +36,12 @@ MostrarLivrosAbandonados()
 EditarStatusLivro()
 
 AdicionarLivrosNasRespectivasListas() TA ERRADISSIMO
+
+COLOCAR NO MENU APÓS PESQUISAR LIVRO
+Console.WriteLine("6 - Adicionar livro na estante");
+                Console.WriteLine("7 - Adicionar livro aos favoritos");
+                Console.WriteLine("8 - Editar status do livro");/////
+                //marcar como lido
+                //marcar como lendo
+                //marcar como abandonado
+
