@@ -16,7 +16,7 @@ namespace Library.Classes
         public string TextoApresentacao { get; set; }
         public string? Colecao { get; set; }
         public string Volume { get; set; }
-        public string ISBN { get; set; }
+        public string ISBN13 { get; set; }
         public string ID { get; set; }
         public string StatusLivro { get; set; }
         public string DataLancamento { get; set; }
@@ -29,8 +29,8 @@ namespace Library.Classes
             List<string> categoria, string textoApresentacao, string colecao,
             string volume, int paginas)
         {
-            ISBN = isbn;
-            ID = isbn.Substring(1, 10);
+            ISBN13 = isbn;
+            ID = isbn.Substring(0, 5);
             Titulo = titulo;
             Subtitulo = subtitulo;
             AutorPrincipal = autorPrincipal;
@@ -61,7 +61,7 @@ namespace Library.Classes
             }
             Console.WriteLine();
             Console.WriteLine($"Coletânea: {Colecao} - Volume: {Volume} - Páginas: {Paginas}");
-            Console.WriteLine($"ISBN: {ISBN}");
+            Console.WriteLine($"ISBN: {ISBN13}");
             Console.WriteLine($"Sobre o livro: {TextoApresentacao}");
             Console.WriteLine($"Status do livro: {StatusLivro}");
             Console.WriteLine();

@@ -88,7 +88,6 @@ namespace Library.Classes
                 Console.WriteLine();
                 CriarUsuario();
             }
-            Console.WriteLine();
         }
         public void MostrarUsuarios()
         {
@@ -98,7 +97,6 @@ namespace Library.Classes
             {
                 usuario.InformacaoUsuario();
             }
-            Console.WriteLine();
         }
         public void RemoverUsuario()
         {
@@ -277,6 +275,7 @@ namespace Library.Classes
             LivrosCadastrados.Add(livro);
             Console.WriteLine($"{livro.Titulo} adicionado com sucesso!");
             Console.WriteLine();
+            //colocar Write
             Console.WriteLine("Deseja cadastrar outro livro? s/n");
             if (Console.ReadLine() == "s")
             {
@@ -310,9 +309,9 @@ namespace Library.Classes
         public void EditarInformacaoDeLivro()
         {
             MostrarLivrosCadastrados();
-            Console.Write("Digite o ID do livro que deseja editar alguma informação: ");
-            string id = Console.ReadLine();
-            Livro livroSelecionado = LivrosCadastrados.Find(l => l.ID == id);
+            Console.Write("Digite o ISBN do livro que deseja editar alguma informação: ");
+            string isbn = Console.ReadLine();
+            Livro livroSelecionado = LivrosCadastrados.Find(l => l.ISBN13 == isbn);
             if (livroSelecionado != null)
             {
                 Console.WriteLine("Qual informação deseja editar?");
@@ -337,7 +336,7 @@ namespace Library.Classes
                     case 1:
                         {
                             Console.Write("Digite o ISBN correto do livro: ");
-                            livroSelecionado.ISBN = Console.ReadLine();
+                            livroSelecionado.ISBN13 = Console.ReadLine();
                             break;
                         }
                     case 2:
@@ -446,7 +445,7 @@ namespace Library.Classes
             }
             else
             {
-                Console.Write("ID INVÁLIDA! DESEJA TENTAR NOVAMENTE? (s/n): ");
+                Console.Write("LIVRO NÃO ENCONTRADO! DESEJA TENTAR NOVAMENTE? (s/n): ");
                 if (Console.ReadLine() == "s")
                 {
                     Console.WriteLine();
@@ -466,7 +465,7 @@ namespace Library.Classes
                         LivrosCadastrados.Sort((p1, p2) => p1.Titulo.CompareTo(p2.Titulo));
                         foreach (var livro in LivrosCadastrados)
                         {
-                            Console.WriteLine($"ID: {livro.ID} - Titulo: {livro.Titulo} - {livro.Subtitulo} - Autor(a): {livro.AutorPrincipal}");
+                            Console.WriteLine($"ISBN: {livro.ISBN13} - Titulo: {livro.Titulo} - {livro.Subtitulo} - Autor(a): {livro.AutorPrincipal}");
                         }
                         break;
                     }
@@ -476,7 +475,7 @@ namespace Library.Classes
                         LivrosCadastrados.Sort((p1, p2) => p1.AutorPrincipal.CompareTo(p2.AutorPrincipal));
                         foreach (var livro in LivrosCadastrados)
                         {
-                            Console.WriteLine($"ID: {livro.ID} - Titulo: {livro.Titulo} - {livro.Subtitulo} - Autor(a): {livro.AutorPrincipal}");
+                            Console.WriteLine($"ISBN:  {livro.ISBN13} - Titulo: {livro.Titulo} - {livro.Subtitulo} - Autor(a): {livro.AutorPrincipal}");
                         }
                         break;
                     }
@@ -491,7 +490,6 @@ namespace Library.Classes
                         break;
                     }
             }
-            Console.WriteLine();
         }
         public void PesquisarLivro()
         {
@@ -522,7 +520,7 @@ namespace Library.Classes
                                 }
                             }
                             Console.WriteLine();
-                            if (TipoConta == "Usuario")
+                            if (UsuarioLogado.TipoConta == "Usuario")
                             {
                                 AdicionarLivroEmLista(livroSelecionado);
                             }
@@ -532,8 +530,8 @@ namespace Library.Classes
                 case 2:
                     {
                         Console.Write("Digite o ISBN do livro que deseja: ");
-                        string id = Console.ReadLine();
-                        Livro livroSelecionado = LivrosCadastrados.Find(l => l.ID == id);
+                        string isbn = Console.ReadLine();
+                        Livro livroSelecionado = LivrosCadastrados.Find(l => l.ISBN13 == isbn);
                         if (livroSelecionado == null)
                         {
                             Console.Write("LIVRO NÃO ENCONTRADO! DESEJA TENTAR NOVAMENTE? (s/n)");
@@ -547,10 +545,10 @@ namespace Library.Classes
                         {
                             livroSelecionado.InformacaoLivro();
                             Console.WriteLine();
-                            if (TipoConta == "Usuario")
+                            if (UsuarioLogado.TipoConta == "Usuario")
                             {
                                 AdicionarLivroEmLista(livroSelecionado);
-                            }
+                            } 
                         }
                         break;
                     }
@@ -558,28 +556,28 @@ namespace Library.Classes
         }
         public void MostrarLivrosLidos()
         {
-            Console.Write("Livros lidos: ");
+            Console.WriteLine("Livros lidos: ");
             foreach (var livroLido in LivrosLidos)
             {
-                Console.WriteLine($"ID: {livroLido.ID} - Titulo: {livroLido.Titulo} - {livroLido.Subtitulo} - Autor(a): {livroLido.AutorPrincipal}");
+                Console.WriteLine($"ISBN: {livroLido.ISBN13} - Titulo: {livroLido.Titulo} - {livroLido.Subtitulo} - Autor(a): {livroLido.AutorPrincipal}");
             }
             Console.WriteLine();
         }
         public void MostrarLivrosParaLer()
         {
-            Console.Write("Livros para ler: ");
+            Console.WriteLine("Livros para ler: ");
             foreach (var livroParaLer in LivrosParaLer)
             {
-                Console.WriteLine($"ID: {livroParaLer.ID} - Titulo: {livroParaLer.Titulo} - {livroParaLer.Subtitulo} - Autor(a): {livroParaLer.AutorPrincipal}");
+                Console.WriteLine($"ISBN: {livroParaLer.ISBN13} - Titulo: {livroParaLer.Titulo} - {livroParaLer.Subtitulo} - Autor(a): {livroParaLer.AutorPrincipal}");
             }
             Console.WriteLine();
         }
         public void MostrarLivrosNaEstante()
         {
-            Console.Write("Livros na estante: ");
+            Console.WriteLine("Livros na estante: ");
             foreach (var livroNaEstante in LivrosNaEstante)
             {
-                Console.WriteLine($"ID: {livroNaEstante.ID} - Titulo: {livroNaEstante.Titulo} - {livroNaEstante.Subtitulo} - Autor(a): {livroNaEstante.AutorPrincipal}");
+                Console.WriteLine($"ISBN: {livroNaEstante.ISBN13} - Titulo: {livroNaEstante.Titulo} - {livroNaEstante.Subtitulo} - Autor(a): {livroNaEstante.AutorPrincipal}");
             }
             Console.WriteLine();
             Console.Write("Deseja remover algum livro da lista? (s/n): ");
@@ -593,7 +591,7 @@ namespace Library.Classes
             Console.WriteLine();
             Console.Write("Digite o ISBN do livro que deseja remover: ");
             string iSBN = Console.ReadLine();
-            Livro livroSelecionado = LivrosNaEstante.Find(l => l.ISBN == iSBN);
+            Livro livroSelecionado = LivrosNaEstante.Find(l => l.ISBN13 == iSBN);
             LivrosNaEstante.Remove(livroSelecionado);
             Console.Write("Livro removido com sucesso! Deseja remover outro? (s/n): ");
             if (Console.ReadLine() == "s")
@@ -606,7 +604,7 @@ namespace Library.Classes
             Console.Write("Livros favoritos: ");
             foreach (var livroFavorito in LivrosFavoritos)
             {
-                Console.WriteLine($"ID: {livroFavorito.ID} - Titulo: {livroFavorito.Titulo} - {livroFavorito.Subtitulo} - Autor(a): {livroFavorito.AutorPrincipal}");
+                Console.WriteLine($"ISBN: {livroFavorito.ISBN13} - Titulo: {livroFavorito.Titulo} - {livroFavorito.Subtitulo} - Autor(a): {livroFavorito.AutorPrincipal}");
             }
             Console.WriteLine();
             Console.Write("Deseja remover algum livro da lista? (s/n): ");
@@ -620,7 +618,7 @@ namespace Library.Classes
             Console.WriteLine();
             Console.Write("Digite o ISBN do livro que deseja remover: ");
             string iSBN = Console.ReadLine();
-            Livro livroSelecionado = LivrosFavoritos.Find(l => l.ISBN == iSBN);
+            Livro livroSelecionado = LivrosFavoritos.Find(l => l.ISBN13 == iSBN);
             LivrosFavoritos.Remove(livroSelecionado);
             Console.Write("Livro removido com sucesso! Deseja remover outro? (s/n): ");
             if (Console.ReadLine() == "s")
@@ -703,7 +701,7 @@ namespace Library.Classes
         }
         public void RemoverLivroDaLista(Livro livroSelecionado)
         {
-            LivrosAbandonados.Remove(livroSelecionado);
+            LivrosLidos.Remove(livroSelecionado);
             LivrosLendo.Remove(livroSelecionado);
             LivrosAbandonados.Remove(livroSelecionado);
         }
@@ -714,7 +712,7 @@ namespace Library.Classes
                 PaginasLidas += pagina.Paginas;
             }
             Console.WriteLine();
-            Console.WriteLine($"Você já leu {PaginasLidas}");
+            Console.WriteLine($"Você já leu {PaginasLidas} páginas");
         }
         public void InformacaoUsuario()
         {
